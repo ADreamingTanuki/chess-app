@@ -1,0 +1,11 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(--column-count, 1fr);
+  grid-template-rows: repeat(--row-count, 1fr);
+  width: var(--board-size, 0);
+  height: var(--board-size, 0);
+}
+
+.gameplay {
+  position: relative;
+}

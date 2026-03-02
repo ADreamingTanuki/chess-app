@@ -1,0 +1,7 @@
+.tile {
+  padding: 5px;
+}
+
+.tile span {
+  color: orange;
+}
