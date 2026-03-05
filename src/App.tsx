@@ -1,6 +1,9 @@
 
 // react
 
+// chess.js
+import { Chess } from "chess.js";
+
 // custom
 import Board from "./components/board";
 import { Piece } from "./components/piece";
@@ -8,13 +11,15 @@ import "./styles/main.css"
 
 function App() {
 
-  const board_size = 8;
+  let game = new Chess();
 
   return (
     <main 
       className="container"
     >
-      <Board sizeX={board_size} sizeY={board_size}/>
+      <Board 
+        gamestate={game.board()} 
+      />
     </main>
   );
 }
