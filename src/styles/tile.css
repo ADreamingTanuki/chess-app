@@ -1,7 +1,19 @@
 .tile {
   padding: 5px;
+  /* border: 1px black solid; */
 }
 
-.tile span {
-  color: orange;
+.black {
+  background-color: #111;
+  color: #eee;
 }
+
+/* .black span {
+  color: #;
+} */
+
+.white {
+  background-color: #eee;
+  color: #111;
+}
+

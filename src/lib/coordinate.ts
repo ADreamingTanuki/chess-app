@@ -1,7 +1,9 @@
 
 // this code should be tested for consistencey...
 
-const ROW_TO_NUMBER_LOOKUP = new Map<string, number>(
+import { NUM_ROWS } from "./chess-constants";
+
+const COLUMN_TO_NUMBER_LOOKUP = new Map<string, number>(
   [
     ['a',0],
     ['b',1],
@@ -14,28 +16,54 @@ const ROW_TO_NUMBER_LOOKUP = new Map<string, number>(
   ]
 )
 
+const ERR_TAG = "[ChessApp] [Coordinate] ";
+
 export default class Coordinate {
-  coordStr: string
+  string: string;
+  row: number;
+  column: number;
 
-  constructor(coordStr: string) {
-    this.coordStr = coordStr;
-  }
+  constructor(coordString: string) {
 
-  getX(): number {
-    let row: string = this.coordStr.split("")[0];
-    row = row.toLowerCase();
-    const n: number | undefined = ROW_TO_NUMBER_LOOKUP.get(row);
-    return n as number;
-  }
+    console.log(COLUMN_TO_NUMBER_LOOKUP);
 
-  getY(): number {
-    const col: string = this.coordStr.split("")[1];
-    const n: number = Number.parseInt(col) - 1;
-    return n;
-  }
-  
-  getString(): string {
-    return this.coordStr;
-  }
+    if (coordString.length !== 2) {
+      throw new Error(ERR_TAG + "Parameter coordString must be a two-character string");
+    }
 
+    this.string = coordString.toLowerCase();
+
+    // determine row / column number from passed string
+
+    const slices: string[] = coordString.split("");
+    const colStr = slices[0].toLowerCase();
+    const rowStr = slices[1];
+
+
+    // columns (Alphabetic, A~H, mapping 0~7) ---------------------------------
+
+    const colNum: number | undefined = COLUMN_TO_NUMBER_LOOKUP.get(colStr);
+
+    if (typeof colNum === 'undefined') {
+      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${colStr}' inferred from '${coordString}' should be a letter from A~H`);
+    }    
+
+    this.column = colNum as number;
+
+
+    // rows (Numeric, 1~8, mapping 0~7) ---------------------------------------
+
+    const rowNum: number | undefined = Number.parseInt(rowStr);
+
+    if (!rowNum) {
+      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${rowStr}' inferred from '${coordString}' should be numeric, but cannot be parsed into a number.`)
+    }   
+    
+    this.row = rowNum as number;
+    this.row -= 1;
+    
+    if (this.row < 0 || this.row >= NUM_ROWS) {
+      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${rowStr}' inferred from '${coordString}' should be a number from 0~7`);
+    }    
+  }
 }
