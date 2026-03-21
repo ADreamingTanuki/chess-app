@@ -27,3 +27,10 @@ test('input column must be a valid value [A~H]', async () => {
   expect(new Coordinate("e4").string).toBe("e4");
   expect(() => new Coordinate("x5")).toThrow();
 });
+
+test('colour function works as expected', async () => {
+  expect(new Coordinate("a1").colour()).toBe('black');
+  expect(new Coordinate("h8").colour()).toBe('black');
+  expect(new Coordinate("e2").colour()).toBe('white');
+  expect(new Coordinate("d5").colour()).toBe('white');
+});

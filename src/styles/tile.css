@@ -1,6 +1,8 @@
 .tile {
   padding: 5px;
-  /* border: 1px black solid; */
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
 }
 
 .black {

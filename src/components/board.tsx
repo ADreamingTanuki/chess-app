@@ -37,7 +37,7 @@ export default function Board(props: BoardProps): JSX.Element {
         //  - build coordinate type
         //  - use coord type to evaluate tile colour
         // build coord type with tests yay
-        grid.push(<Tile key={i} coordinate={SQUARES[i]}/>);
+        grid.push(<Tile key={i} coordinate={new Coordinate(SQUARES[i])}/>);
       }
     }
 

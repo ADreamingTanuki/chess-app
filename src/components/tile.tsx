@@ -6,7 +6,7 @@ import "../styles/tile.css"
 import Coordinate from "../lib/coordinate";
 
 export interface TileProps {
-  coordinate: string
+  coordinate: Coordinate
   // onClick: Function
 }
 
@@ -21,8 +21,10 @@ export default function Tile(props: TileProps): JSX.Element {
   // data should be passed thrugh props, or the piece itself as a child object?
   // choose one
   return (
-    <div className="tile">
-      <span>{props.coordinate}</span>
+    <div className={`tile ${props.coordinate.colour()}`}>
+      <span>{props.coordinate.string}</span>
+      <span>{props.coordinate.column}</span>
+      <span>{props.coordinate.row}</span>
     </div>
     // <div 
     //   className="tile"

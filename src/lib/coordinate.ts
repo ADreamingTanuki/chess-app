@@ -1,6 +1,4 @@
 
-// this code should be tested for consistencey...
-
 import { NUM_ROWS } from "./chess-constants";
 
 const COLUMN_TO_NUMBER_LOOKUP = new Map<string, number>(
@@ -65,5 +63,13 @@ export default class Coordinate {
     if (this.row < 0 || this.row >= NUM_ROWS) {
       throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${rowStr}' inferred from '${coordString}' should be a number from 0~7`);
     }    
+  }
+
+  colour(): 'black' | 'white' {
+    if (this.column % 2 === 0) {
+      return this.row % 2 === 0 ? "black" : "white";
+    } else {
+      return this.row % 2 === 0 ? "white" : "black";
+    } 
   }
 }
