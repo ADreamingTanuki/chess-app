@@ -13,7 +13,8 @@ export interface PieceProps {
   // icon: SVGElement,
   // team: number
   posX: number,
-  posY: number
+  posY: number,
+  drawSize: number
 }
 
 export function Piece(props: PieceProps): JSX.Element {
@@ -23,7 +24,9 @@ export function Piece(props: PieceProps): JSX.Element {
       className="outer"
       style={{
         left: props.posX,
-        top: props.posY
+        top: props.posY,
+        width: props.drawSize,
+        height: props.drawSize,
       }}  
     >
       <div className="shell">

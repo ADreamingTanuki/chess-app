@@ -6,12 +6,13 @@ import { CSSProperties, JSX } from "react";
 import { SQUARES } from "chess.js";
 
 // custom
-import Tile, { TileProps } from "./tile";
+import Tile from "./tile";
+import { Piece } from "./piece";
 import Coordinate from "../lib/coordinate";
 import "../styles/board.css"
 import { NUM_COLUMNS, NUM_ROWS } from "../lib/chess-constants";
-
-const BOARD_SIZE = 8;
+import { calcBoardDimensions } from "../lib/board-utils";
+import useWindowDimensions from "../lib/window-dimensions";
 
 type ChessTileState = {
   square: string; 
@@ -27,7 +28,6 @@ export interface BoardProps {
 export default function Board(props: BoardProps): JSX.Element {
 
   function buildGrid(): JSX.Element[] {
-    console.log(props.gamestate);
     let grid: JSX.Element[] = []
 
     for (let col = 0; col < NUM_COLUMNS; col++) {
@@ -39,19 +39,24 @@ export default function Board(props: BoardProps): JSX.Element {
     return grid;
   }
 
-  let coord = new Coordinate("A8");
+  const { viewportWidth, viewportHeight } = useWindowDimensions();
+  const MARGIN = 100
+  const { boardSize, cellSize } = calcBoardDimensions(viewportWidth, viewportHeight, MARGIN)
+
+  const boardStyle = {
+    width: boardSize,
+    display: "grid",
+    gridTemplateColumns: `repeat(${NUM_COLUMNS}, ${cellSize}px)`,
+    gridTemplateRows: `repeat(${NUM_ROWS}, ${cellSize}px)`
+  } as CSSProperties;
 
   return (
     <div className="gameplay">
       <div id="pieces-container">
-        {/* <Piece posX={0} posY={0}/> */}
+        <Piece drawSize={cellSize} posX={0} posY={0}/>
       </div>
-      <div
-        className="board"      
-        style={{        
-          "grid-template-columns": `repeat(${BOARD_SIZE}, 1fr)`,
-          "grid-template-rows": `repeat(${BOARD_SIZE}, 1fr)`
-        } as CSSProperties}  
+      <div  
+        style={boardStyle} 
       >
         {buildGrid()}
       </div>

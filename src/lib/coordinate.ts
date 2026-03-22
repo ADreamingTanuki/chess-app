@@ -23,8 +23,6 @@ export default class Coordinate {
 
   constructor(coordString: string) {
 
-    console.log(COLUMN_TO_NUMBER_LOOKUP);
-
     if (coordString.length !== 2) {
       throw new Error(ERR_TAG + "Parameter coordString must be a two-character string");
     }
