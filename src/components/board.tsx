@@ -7,7 +7,6 @@ import { SQUARES } from "chess.js";
 
 // custom
 import Tile from "./tile";
-import { Piece } from "./piece";
 import Coordinate from "../lib/coordinate";
 import "../styles/board.css"
 import { NUM_COLUMNS, NUM_ROWS } from "../lib/chess-constants";
@@ -20,7 +19,6 @@ import RenderPieces from "../lib/piece-renderer";
 export interface BoardProps {
   gamestate: ChessJSTileState[][]
 }
-
 
 export default function Board(props: BoardProps): JSX.Element {
 

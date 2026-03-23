@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "test": "vitest"
+    "test": "vitest",
+    "convert-svg": "npx @svgr/cli --out-dir .\\src\\assets\\svgr\\bin\\ .\\src\\assets\\svg\\ --jsx-runtime automatic"
   },
   "dependencies": {
     "@tauri-apps/api": "^2",
@@ -29,5 +30,8 @@
     "typescript": "~5.8.3",
     "vite": "^7.0.4",
     "vitest": "^4.0.18"
+  },
+  "svgr": {
+    "typescript": true
   }
 }

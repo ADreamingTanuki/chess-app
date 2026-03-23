@@ -46,8 +46,9 @@ export default class RenderPieces {
 
   toArray = (cellSize: number): JSX.Element[] => 
     this._pieces.map(piece => PieceComponent({
-      posX: piece.position.column * cellSize,
-      posY: piece.position.row * cellSize,
-      drawSize: cellSize
-    }));
+      position: piece.position,
+      drawSize: cellSize,
+      team: piece.team
+    }
+  ));
 }
