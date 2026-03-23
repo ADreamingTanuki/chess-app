@@ -14,30 +14,15 @@ import { NUM_COLUMNS, NUM_ROWS } from "../lib/chess-constants";
 import { calcBoardDimensions } from "../lib/board-utils";
 import useWindowDimensions from "../lib/window-dimensions";
 
-type ChessTileState = {
-  square: string; 
-  type: string; 
-  color: string;
-} | null;
+import { ChessJSTileState } from "../lib/chess-types";
+import RenderPieces from "../lib/piece-renderer";
 
 export interface BoardProps {
-  gamestate: ChessTileState[][]
+  gamestate: ChessJSTileState[][]
 }
 
 
 export default function Board(props: BoardProps): JSX.Element {
-
-  function buildGrid(): JSX.Element[] {
-    let grid: JSX.Element[] = []
-
-    for (let col = 0; col < NUM_COLUMNS; col++) {
-      for (let row = 0; row < NUM_ROWS; row++) {
-        const i = col * NUM_ROWS + row;
-        grid.push(<Tile key={i} coordinate={new Coordinate(SQUARES[i])}/>);
-      }
-    }
-    return grid;
-  }
 
   const { viewportWidth, viewportHeight } = useWindowDimensions();
   const MARGIN = 100
@@ -52,8 +37,13 @@ export default function Board(props: BoardProps): JSX.Element {
 
   return (
     <div className="gameplay">
+      {/* todo: the pieces need to be moved via library + game commands?? - or just position them correctly via chess.js board state */}
       <div id="pieces-container">
-        <Piece drawSize={cellSize} posX={0} posY={0}/>
+        {
+          RenderPieces
+            .fromChessJS(props.gamestate)
+            .toArray(cellSize)
+        }
       </div>
       <div  
         style={boardStyle} 
@@ -61,5 +51,17 @@ export default function Board(props: BoardProps): JSX.Element {
         {buildGrid()}
       </div>
     </div>
-  )
+  )  
+  
+  function buildGrid(): JSX.Element[] {
+    let grid: JSX.Element[] = []
+
+    for (let col = 0; col < NUM_COLUMNS; col++) {
+      for (let row = 0; row < NUM_ROWS; row++) {
+        const i = col * NUM_ROWS + row;
+        grid.push(<Tile key={i} coordinate={new Coordinate(SQUARES[i])}/>);
+      }
+    }
+    return grid;
+  }
 }

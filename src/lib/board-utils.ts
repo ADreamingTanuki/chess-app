@@ -1,4 +1,9 @@
 
+import { JSX } from "react";
+
+// probably not the final home for this piee of  code
+// will I need a file for chess gamestate stuff?
+
 
 export interface BoardDimensions {
   boardSize: number,
@@ -22,3 +27,10 @@ export function calcBoardDimensions(
   const cellSize = boardSize / 8;
   return { boardSize, cellSize }
 }
+
+// export function renderPiecesFromGamestate(
+//   gamestate: ChessTileState[][]
+// ): JSX.Element[] {
+//   let res: JSX.Element[] = new Array();
+//   return res;
+// }

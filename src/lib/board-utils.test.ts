@@ -14,3 +14,4 @@ test('board dimensions are calculated using height when it is the smaller value'
     cellSize: 20,
   });
 });
+
