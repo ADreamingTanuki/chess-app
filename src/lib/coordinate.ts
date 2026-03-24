@@ -1,5 +1,6 @@
 
 import { NUM_ROWS } from "./chess-constants";
+import { SquareColour } from "./chess-types";
 
 const COLUMN_TO_NUMBER_LOOKUP = new Map<string, number>(
   [
@@ -63,7 +64,7 @@ export default class Coordinate {
     }    
   }
 
-  colour(): 'black' | 'white' {
+  colour(): SquareColour {
     if (this.column % 2 === 0) {
       return this.row % 2 === 0 ? "black" : "white";
     } else {

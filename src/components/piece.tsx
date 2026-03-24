@@ -7,14 +7,10 @@ import * as SVG  from "../assets/svgr/index"
 // custom
 import { Team } from "../lib/chess-types";
 import Coordinate from "../lib/coordinate";
+import COLOUR from "../lib/colours";
 
 
 // STYLES ---------------------------------------------------------------------
-
-const COLOUR_BLACK_1 = '#111'
-const COLOUR_BLACK_2 = '#222'
-const COLOUR_WHITE_1 = '#eee'
-const COLOUR_WHITE_2 = '#ccc'
 
 const ICON_SCALE = '65%';
 
@@ -37,13 +33,13 @@ const STYLE_SHELL: CSSProperties = {
 }
 
 const STYLE_SHELL_BLACK: CSSProperties = {
-  backgroundColor: COLOUR_BLACK_2,
-  border: border(COLOUR_WHITE_2)
+  backgroundColor: COLOUR.BLACK_2,
+  border: border(COLOUR.WHITE_2)
 }
 
 const STYLE_SHELL_WHITE: CSSProperties = {
-  backgroundColor: COLOUR_WHITE_2,
-  border: border(COLOUR_BLACK_2)
+  backgroundColor: COLOUR.WHITE_2,
+  border: border(COLOUR.BLACK_2)
 }
 function styleOfOuter(coordinate: Coordinate, drawSize: number) {
   return {
@@ -71,10 +67,10 @@ function styleOfShell(team: Team) {
 
 function fillColourByTeam(team: Team) {
   if (team === 'black') {
-    return COLOUR_WHITE_1;
+    return COLOUR.WHITE_1;
   }
   else {
-    return COLOUR_BLACK_1;
+    return COLOUR.BLACK_1;
   }
 }
 

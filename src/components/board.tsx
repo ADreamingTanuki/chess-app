@@ -56,7 +56,7 @@ export default function Board(props: BoardProps): JSX.Element {
 
     for (let col = 0; col < NUM_COLUMNS; col++) {
       for (let row = 0; row < NUM_ROWS; row++) {
-        const i = col * NUM_ROWS + row;
+        const i = (col * NUM_ROWS) + row;
         grid.push(<Tile key={i} coordinate={new Coordinate(SQUARES[i])}/>);
       }
     }

@@ -44,45 +44,54 @@ export default class RenderPieces {
     return this._pieces;
   }
 
-  toArray = (cellSize: number): JSX.Element[] => 
-    this._pieces.map(piece => {
+  toArray(cellSize: number): JSX.Element[] {
+    let k = -1;
+    return this._pieces.map(piece => {
+      k++;
       switch(piece.type) {
         case "king":
-          return PieceComponent.King({
-            position: piece.position,
-            drawSize: cellSize,
-            team: piece.team
-          });
+          return <PieceComponent.King
+            key={k}
+            position={piece.position}
+            drawSize={cellSize}
+            team={piece.team}
+          />;
         case "queen":
-          return PieceComponent.Queen({
-            position: piece.position,
-            drawSize: cellSize,
-            team: piece.team
-          });
+          return <PieceComponent.Queen
+            key={k}
+            position={piece.position}
+            drawSize={cellSize}
+            team={piece.team}
+          />;
         case "bishop":
-          return PieceComponent.Bishop({
-            position: piece.position,
-            drawSize: cellSize,
-            team: piece.team
-          });
+          return <PieceComponent.Bishop
+            key={k}
+            position={piece.position}
+            drawSize={cellSize}
+            team={piece.team}
+          />;
         case "knight":
-          return PieceComponent.Knight({
-            position: piece.position,
-            drawSize: cellSize,
-            team: piece.team
-          });
+          return <PieceComponent.Knight
+            key={k}
+            position={piece.position}
+            drawSize={cellSize}
+            team={piece.team}
+          />;
         case "rook":
-          return PieceComponent.Rook({
-            position: piece.position,
-            drawSize: cellSize,
-            team: piece.team
-          });
+          return <PieceComponent.Rook
+            key={k}
+            position={piece.position}
+            drawSize={cellSize}
+            team={piece.team}
+          />;
         case "pawn":
-          return PieceComponent.Pawn({
-            position: piece.position,
-            drawSize: cellSize,
-            team: piece.team
-          });
+          return <PieceComponent.Pawn
+            key={k}
+            position={piece.position}
+            drawSize={cellSize}
+            team={piece.team}
+          />;
       }
     });
+  }
 }
