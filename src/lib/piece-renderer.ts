@@ -6,12 +6,12 @@ import { JSX } from "react";
 import Coordinate from "./coordinate"
 import { Piece, Team, ChessJSGameState, ChessJSTileState } from "./chess-types"
 import { ConvertChessJS } from "./convert-chess-js";
-import { Piece as PieceComponent } from "../components/piece";
+import * as PieceComponent from "../components/piece";
 
 
 export interface PieceInfo {
   position: Coordinate,
-  piece: Piece,
+  type: Piece,
   team: Team
 }
 
@@ -29,7 +29,7 @@ export default class RenderPieces {
         if (!tile) return;
         const cmd: PieceInfo = {
           position: new Coordinate(tile.square),
-          piece: ConvertChessJS.piece(tile.type),
+          type: ConvertChessJS.piece(tile.type),
           team: ConvertChessJS.team(tile.color)
         }
         res._pieces.push(cmd);
@@ -45,10 +45,44 @@ export default class RenderPieces {
   }
 
   toArray = (cellSize: number): JSX.Element[] => 
-    this._pieces.map(piece => PieceComponent({
-      position: piece.position,
-      drawSize: cellSize,
-      team: piece.team
-    }
-  ));
+    this._pieces.map(piece => {
+      switch(piece.type) {
+        case "king":
+          return PieceComponent.King({
+            position: piece.position,
+            drawSize: cellSize,
+            team: piece.team
+          });
+        case "queen":
+          return PieceComponent.Queen({
+            position: piece.position,
+            drawSize: cellSize,
+            team: piece.team
+          });
+        case "bishop":
+          return PieceComponent.Bishop({
+            position: piece.position,
+            drawSize: cellSize,
+            team: piece.team
+          });
+        case "knight":
+          return PieceComponent.Knight({
+            position: piece.position,
+            drawSize: cellSize,
+            team: piece.team
+          });
+        case "rook":
+          return PieceComponent.Rook({
+            position: piece.position,
+            drawSize: cellSize,
+            team: piece.team
+          });
+        case "pawn":
+          return PieceComponent.Pawn({
+            position: piece.position,
+            drawSize: cellSize,
+            team: piece.team
+          });
+      }
+    });
 }

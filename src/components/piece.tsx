@@ -1,5 +1,5 @@
 // react
-import { CSSProperties, JSX } from "react";
+import { CSSProperties, JSX, ReactNode } from "react";
 
 // svgr conversions
 import * as SVG  from "../assets/svgr/index"
@@ -8,34 +8,17 @@ import * as SVG  from "../assets/svgr/index"
 import { Team } from "../lib/chess-types";
 import Coordinate from "../lib/coordinate";
 
-export interface PieceProps {
-  position: Coordinate,
-  drawSize: number,
-  team: Team,
-  // iconSrc: string
-}
 
-// todo: 
-// - colour / team
-// - icon
-
-export function Piece(props: PieceProps): JSX.Element {
-
-  return (
-    <div style={styleOfOuter(props.position, props.drawSize)}>
-      <div style={styleOfShell(props.team)}>
-        <SVG.Pawn width="y0%" height="70%" fill="#FFF" stroke="#FFF"/>
-      </div>
-    </div>
-  )
-}
+// STYLES ---------------------------------------------------------------------
 
 const COLOUR_BLACK_1 = '#111'
 const COLOUR_BLACK_2 = '#222'
 const COLOUR_WHITE_1 = '#eee'
 const COLOUR_WHITE_2 = '#ccc'
 
-const border = (colStr: string) => `solid 1px ${colStr}`;
+const ICON_SCALE = '65%';
+
+const border = (colStr: string) => `solid 2px ${colStr}`;
 
 const STYLE_OUTER: CSSProperties = {
   position: 'absolute',
@@ -62,12 +45,6 @@ const STYLE_SHELL_WHITE: CSSProperties = {
   backgroundColor: COLOUR_WHITE_2,
   border: border(COLOUR_BLACK_2)
 }
-
-const STYLE_ICON: CSSProperties = {  
-  height: '70%',
-  width:  '70%'
-}
-
 function styleOfOuter(coordinate: Coordinate, drawSize: number) {
   return {
     ...STYLE_OUTER,
@@ -91,3 +68,94 @@ function styleOfShell(team: Team) {
     }
   }
 }
+
+function fillColourByTeam(team: Team) {
+  if (team === 'black') {
+    return COLOUR_WHITE_1;
+  }
+  else {
+    return COLOUR_BLACK_1;
+  }
+}
+
+
+// GENERIC BUILDER ------------------------------------------------------------
+
+export interface PieceProps {
+  position: Coordinate,
+  drawSize: number,
+  team: Team
+}
+
+function drawPiece(data: PieceProps, icon: ReactNode):  JSX.Element {
+  return (
+    <div style={styleOfOuter(data.position, data.drawSize)}>
+      <div style={styleOfShell(data.team)}>
+        {icon}
+      </div>
+    </div>
+  )
+}
+
+// INDIVIDUAL PIECES ----------------------------------------------------------
+
+
+export const Pawn = (props: PieceProps): JSX.Element =>
+  drawPiece(
+    props,    
+    <SVG.Pawn
+      width ={ICON_SCALE}
+      height={ICON_SCALE}
+      fill={fillColourByTeam(props.team)}
+    />
+  );
+  
+export const Knight = (props: PieceProps): JSX.Element =>
+  drawPiece(
+    props,    
+    <SVG.Knight
+      width ={ICON_SCALE}
+      height={ICON_SCALE}
+      fill={fillColourByTeam(props.team)}
+    />
+  );
+
+export const Bishop = (props: PieceProps): JSX.Element =>
+  drawPiece(
+    props,    
+    <SVG.Bishop
+      width ={ICON_SCALE}
+      height={ICON_SCALE}
+      fill={fillColourByTeam(props.team)}
+    />
+  );
+
+export const Rook = (props: PieceProps): JSX.Element =>
+  drawPiece(
+    props,    
+    <SVG.Rook
+      width ={ICON_SCALE}
+      height={ICON_SCALE}
+      fill={fillColourByTeam(props.team)}
+    />
+  );
+
+export const Queen = (props: PieceProps): JSX.Element =>
+  drawPiece(
+    props,    
+    <SVG.Queen
+      width ={ICON_SCALE}
+      height={ICON_SCALE}
+      fill={fillColourByTeam(props.team)}
+    />
+  );
+
+export const King = (props: PieceProps): JSX.Element =>
+  drawPiece(
+    props,    
+    <SVG.King
+      width ={ICON_SCALE}
+      height={ICON_SCALE}
+      fill={fillColourByTeam(props.team)}
+    />
+  );
