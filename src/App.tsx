@@ -1,26 +1,18 @@
 
 // react
 
-// chess.js
-import { Chess } from "chess.js";
 
 // custom
-import Board from "./components/board";
-import { Piece } from "./components/piece";
+import Gameplay from "./Gameplay";
 import "./styles/main.css"
 
 function App() {
 
-  let game = new Chess();
+  // app gamestate must be managed through one component
+  // maybe have a specific game component that loads in for a gameplay instance?
 
   return (
-    <main 
-      className="container"
-    >
-      <Board 
-        gamestate={game.board()} 
-      />
-    </main>
+    <Gameplay/>
   );
 }
 
