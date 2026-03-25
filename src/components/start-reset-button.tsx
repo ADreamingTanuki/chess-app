@@ -1,22 +1,19 @@
-import { JSX, useState } from "react";
+import { ReactNode } from "react";
 
-import ChessGame from "../lib/chess-game";
+export interface StartResetButtonProps {
+  isGameInPlay: boolean,
+  callback: () => void
+}
 
-export default function StartResetButton(): JSX.Element {
-
-  const [isActive, setIsActive] = useState(ChessGame.isActive);
-
-  function onClick(e: any) {
-    console.log("squaming");
-  }
+export default function StartResetButton(props: StartResetButtonProps): ReactNode {
 
   function drawLabel() {
-    return isActive ? "Reset Game"  : "Start Game";
+    return props.isGameInPlay ? "Reset Game"  : "Start Game";
   }
 
   return (
     <button 
-      onClick={onClick}
+      onClick={() => props.callback()}
     >
       { drawLabel() }
     </button>

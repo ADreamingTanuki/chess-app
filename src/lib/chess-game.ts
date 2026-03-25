@@ -6,31 +6,24 @@
 import { Chess, Square } from "chess.js";
 import Coordinate from "./coordinate";
 import { makeErrorSubtag } from "./custom-errors";
-import { Team } from "./chess-types";
 
 const ERR_TAG = makeErrorSubtag("[ChessGame]");
 
-export type TeamToMove = Team | undefined;
-
 export default class ChessGame {
   
-  static _game: Chess | undefined;
-  static teamToMove: TeamToMove;
-  static isActive: boolean = false;
+  static game: Chess = new Chess();
 
   // start a new game session
   static new() {
-    this._game = new Chess();
-    this.isActive = true;
-    this.teamToMove = 'white';
+    this.game.reset
   }
 
   // error if no game session exists
   static async getMovesAt(position: Coordinate): Promise<Coordinate[]> {
-    if (this._game === undefined) 
+    if (this.game === undefined) 
       throw new Error(ERR_TAG + `Tried to get moves at position '${position}' but no game has been initialized`);
     else 
-      return this._game
+      return this.game
         .moves({square: position.string as Square})
         .map(str => new Coordinate(str))
   }
