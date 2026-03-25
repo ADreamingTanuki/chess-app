@@ -2,9 +2,6 @@
 // react
 import { ReactNode, useState } from "react";
 
-// chess.js
-import { Chess } from "chess.js";
-
 // custom
 import Board from "./components/board";
 import TurnIndicator from "./components/turn-indicator";
@@ -12,6 +9,7 @@ import Flex from "./components/flex";
 import StartResetButton from "./components/start-reset-button";
 import { ChessJSGameState, Team } from "./lib/chess-types";
 import ChessGame from "./lib/chess-game";
+import Coordinate from "./lib/coordinate";
 
 export default function Gameplay(): ReactNode {
 
@@ -25,6 +23,13 @@ export default function Gameplay(): ReactNode {
     setTeamToPlay("white");
     setGameState(ChessGame.game.board());
   }
+
+  // todo: highlight move tiles on click
+  // todo: can move pieces and progress game turns
+  async function onClickTile(pos: Coordinate) {
+    ChessGame.getMovesAt(pos)
+      .then(res => console.log(res));
+  }
   
   return (    
     <main 
@@ -33,6 +38,7 @@ export default function Gameplay(): ReactNode {
       <Flex direciton="column">
         <Board 
           gamestate={gameState} 
+          tileClickCallback={onClickTile}
         />
         <Flex direciton="column">
           <TurnIndicator

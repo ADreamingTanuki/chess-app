@@ -25,7 +25,7 @@ export default class Coordinate {
   constructor(coordString: string) {
 
     if (coordString.length !== 2) {
-      throw new Error(ERR_TAG + "Parameter coordString must be a two-character string");
+      throw new Error(ERR_TAG + `Parameter coordString - value: ${coordString} - must be a two-character string`);
     }
 
     this.string = coordString.toLowerCase();

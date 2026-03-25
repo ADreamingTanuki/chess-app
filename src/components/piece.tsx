@@ -5,7 +5,7 @@ import { CSSProperties, JSX, ReactNode } from "react";
 import * as SVG  from "../assets/svgr/index"
 
 // custom
-import { Team } from "../lib/chess-types";
+import { Team, TileClickCallback } from "../lib/chess-types";
 import Coordinate from "../lib/coordinate";
 import COLOUR from "../lib/colours";
 
@@ -80,12 +80,16 @@ function fillColourByTeam(team: Team) {
 export interface PieceProps {
   position: Coordinate,
   drawSize: number,
-  team: Team
+  team: Team,
+  callback: TileClickCallback
 }
 
 function drawPiece(data: PieceProps, icon: ReactNode):  JSX.Element {
   return (
-    <div style={styleOfOuter(data.position, data.drawSize)}>
+    <div 
+      style={styleOfOuter(data.position, data.drawSize)}
+      onClick={()=>data.callback(data.position)}
+    >
       <div style={styleOfShell(data.team)}>
         {icon}
       </div>

@@ -4,8 +4,7 @@ import { CSSProperties, JSX } from "react";
 // custom
 import Coordinate from "../lib/coordinate";
 import COLOUR from "../lib/colours";
-import { SquareColour } from "../lib/chess-types";
-
+import { SquareColour, TileClickCallback } from "../lib/chess-types";
 
 // STYLES ---------------------------------------------------------------------
 
@@ -37,16 +36,19 @@ function buildStyle(colour: SquareColour): CSSProperties {
 
 // COMPONENT ------------------------------------------------------------------
 
+
 export interface TileProps {
-  coordinate: Coordinate
+  coordinate: Coordinate,
+  callback: TileClickCallback
 }
 
 export default function Tile(props: TileProps): JSX.Element {
   return (
-    <div style={buildStyle(props.coordinate.colour())}>
+    <div 
+      style={buildStyle(props.coordinate.colour())}
+      onClick={() => props.callback(props.coordinate)}
+    >
       <span>{props.coordinate.string}</span>
-      {/* <span>{props.coordinate.column}</span>
-      <span>{props.coordinate.row}</span> */}
     </div>
   )
 }

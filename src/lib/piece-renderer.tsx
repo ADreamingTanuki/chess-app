@@ -4,7 +4,7 @@ import { JSX } from "react";
 
 // custom
 import Coordinate from "./coordinate"
-import { Piece, Team, ChessJSGameState, ChessJSTileState } from "./chess-types"
+import { Piece, Team, ChessJSGameState, ChessJSTileState, TileClickCallback } from "./chess-types"
 import { ConvertChessJS } from "./convert-chess-js";
 import * as PieceComponent from "../components/piece";
 
@@ -44,7 +44,10 @@ export default class RenderPieces {
     return this._pieces;
   }
 
-  toArray(cellSize: number): JSX.Element[] {
+  toArray(
+    cellSize: number, 
+    callback: TileClickCallback
+  ): JSX.Element[] {
     let k = -1;
     return this._pieces.map(piece => {
       k++;
@@ -55,6 +58,7 @@ export default class RenderPieces {
             position={piece.position}
             drawSize={cellSize}
             team={piece.team}
+            callback={callback}
           />;
         case "queen":
           return <PieceComponent.Queen
@@ -62,6 +66,7 @@ export default class RenderPieces {
             position={piece.position}
             drawSize={cellSize}
             team={piece.team}
+            callback={callback}
           />;
         case "bishop":
           return <PieceComponent.Bishop
@@ -69,6 +74,7 @@ export default class RenderPieces {
             position={piece.position}
             drawSize={cellSize}
             team={piece.team}
+            callback={callback}
           />;
         case "knight":
           return <PieceComponent.Knight
@@ -76,6 +82,7 @@ export default class RenderPieces {
             position={piece.position}
             drawSize={cellSize}
             team={piece.team}
+            callback={callback}
           />;
         case "rook":
           return <PieceComponent.Rook
@@ -83,6 +90,7 @@ export default class RenderPieces {
             position={piece.position}
             drawSize={cellSize}
             team={piece.team}
+            callback={callback}
           />;
         case "pawn":
           return <PieceComponent.Pawn
@@ -90,6 +98,7 @@ export default class RenderPieces {
             position={piece.position}
             drawSize={cellSize}
             team={piece.team}
+            callback={callback}
           />;
       }
     });

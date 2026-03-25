@@ -6,8 +6,10 @@
 import { Chess, Square } from "chess.js";
 import Coordinate from "./coordinate";
 import { makeErrorSubtag } from "./custom-errors";
+import { coordFromMove } from "./chess-game-helpers";
 
 const ERR_TAG = makeErrorSubtag("[ChessGame]");
+
 
 export default class ChessGame {
   
@@ -15,7 +17,7 @@ export default class ChessGame {
 
   // start a new game session
   static new() {
-    this.game.reset
+    this.game.reset()
   }
 
   // error if no game session exists
@@ -25,6 +27,9 @@ export default class ChessGame {
     else 
       return this.game
         .moves({square: position.string as Square})
-        .map(str => new Coordinate(str))
+        .map(move => {
+          console.log(`generating move response '${move}'`)
+          return coordFromMove(move);
+        })
   }
 }

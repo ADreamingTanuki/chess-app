@@ -1,8 +1,10 @@
+import Coordinate from "./coordinate";
 
 export type Piece = 'king' | 'queen' | 'bishop' | 'knight' | 'rook' | 'pawn';
 export type Team = 'black' | 'white';
 export type SquareColour = 'black' | 'white';
 
+export type TileClickCallback = (pos: Coordinate) => void;
 
 export type ChessJSTileState = {
   square: string; 
