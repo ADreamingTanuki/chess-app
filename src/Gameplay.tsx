@@ -20,10 +20,19 @@ export default function Gameplay(): ReactNode {
   const [gameState, setGameState] = useState<ChessJSGameState>([]);
 
   function onStartGame() {
-    ChessGame.new();
-    setIsInPlay(true);
-    setTeamToPlay("white");
-    setGameState(ChessGame.game.board());
+    if (isInPlay) {
+      ChessGame.clear();
+      setIsInPlay(false);
+      setSelectedTile(undefined);
+      setDisplayMoves(undefined);
+      setGameState([[]]);
+    }
+    else {
+      ChessGame.new();
+      setIsInPlay(true);
+      setTeamToPlay("white");
+      setGameState(ChessGame.game.board());
+    }
   }
 
   async function onClickTile(pos: Coordinate) {

@@ -17,9 +17,13 @@ export default class ChessGame {
 
   // start a new game session
   static new() {
-    this.game.reset()
+    this.game.reset();
   }
 
+  static clear() {
+    this.game.clear();
+  }
+ 
   // error if no game session exists
   static async getMovesAt(position: Coordinate): Promise<Coordinate[]> {
     if (this.game === undefined) 
