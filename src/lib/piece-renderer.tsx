@@ -27,8 +27,9 @@ export default class RenderPieces {
     gamestate.forEach(row => {
       row.forEach((tile: ChessJSTileState) => {
         if (!tile) return;
+        console.log(`parsing CJS: square = '${tile.square}'`)
         const cmd: PieceInfo = {
-          position: new Coordinate(tile.square),
+          position: Coordinate.fromString(tile.square),
           type: ConvertChessJS.piece(tile.type),
           team: ConvertChessJS.team(tile.color)
         }

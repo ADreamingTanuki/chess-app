@@ -28,7 +28,7 @@ export default class ChessGame {
       return this.game
         .moves({square: position.string as Square})
         .map(move => {
-          console.log(`generating move response '${move}'`)
+          console.log(`visible move: ${move}`)
           return coordFromMove(move);
         })
   }

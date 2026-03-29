@@ -1,5 +1,5 @@
 
-import { NUM_ROWS } from "./chess-constants";
+import { NUM_COLUMNS, NUM_ROWS } from "./chess-constants";
 import { SquareColour } from "./chess-types";
 
 const COLUMN_TO_NUMBER_LOOKUP = new Map<string, number>(
@@ -15,20 +15,46 @@ const COLUMN_TO_NUMBER_LOOKUP = new Map<string, number>(
   ]
 )
 
+const NUMBER_TO_COLUMN_LOOKUP = new Map<number, string>(
+  [
+    [0,'a'],
+    [1,'b'],
+    [2,'c'],
+    [3,'d'],
+    [4,'e'],
+    [5,'f'],
+    [6,'g'],
+    [7,'h'],
+  ]
+)
+
 const ERR_TAG = "[ChessApp] [Coordinate] ";
 
+// @TODO: big refactor of class
+// constructor -> two separate factory methods
+// tests need to be updated and re-run
+// validate tests for other classes at the same time!!!
+// also fix everything that used the old constructor yaaaay
+
 export default class Coordinate {
+
   string: string;
   row: number;
   column: number;
 
-  constructor(coordString: string) {
+  constructor(string: string, row: number, column: number) {
+    this.string = string;
+    this.row = row;
+    this.column = column;
+  }
+
+  static fromString(coordString: string): Coordinate {
 
     if (coordString.length !== 2) {
       throw new Error(ERR_TAG + `Parameter coordString - value: ${coordString} - must be a two-character string`);
     }
 
-    this.string = coordString.toLowerCase();
+    const resultString = coordString.toLowerCase();
 
     // determine row / column number from passed string
 
@@ -36,6 +62,8 @@ export default class Coordinate {
     const colStr = slices[0].toLowerCase();
     const rowStr = slices[1];
 
+
+    // @TODO: YOU GOT ROW/COLUMN MIXED UP AGAINNNN!!!!
 
     // columns (Alphabetic, A~H, mapping 0~7) ---------------------------------
 
@@ -45,7 +73,7 @@ export default class Coordinate {
       throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${colStr}' inferred from '${coordString}' should be a letter from A~H`);
     }    
 
-    this.column = colNum as number;
+    const resultColumn = colNum as number;
 
 
     // rows (Numeric, 1~8, mapping 0~7) ---------------------------------------
@@ -53,15 +81,37 @@ export default class Coordinate {
     const rowNum: number | undefined = Number.parseInt(rowStr);
 
     if (!rowNum) {
-      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${rowStr}' inferred from '${coordString}' should be numeric, but cannot be parsed into a number.`)
+      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Row value '${rowStr}' inferred from '${coordString}' should be numeric, but cannot be parsed into a number.`)
     }   
     
-    this.row = rowNum as number;
-    this.row -= 1;
+    let resultRow = rowNum as number;
+    resultRow -= 1;
     
-    if (this.row < 0 || this.row >= NUM_ROWS) {
-      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Column value '${rowStr}' inferred from '${coordString}' should be a number from 0~7`);
-    }    
+    if (resultRow < 0 || resultRow >= NUM_ROWS) {
+      throw new Error(ERR_TAG + `Parameter coordString must be a valid chess index. Row value '${rowStr}' inferred from '${coordString}' should be a number from 0~7`);
+    }  
+    
+    return new Coordinate(resultString, resultRow, resultColumn);
+  }
+
+  static fromNumbers(row: number, column: number): Coordinate {
+
+    if (!Number.isInteger(row) || !Number.isInteger(column)) {
+      throw new Error(`${ERR_TAG} Parameter row:'${row}' and column: '${column} must be integers`);      
+    }
+
+    if (row < 0 || row >= NUM_ROWS) {
+      throw new Error(`${ERR_TAG} Parameter row is '${row}', when it must be within a range of [0~7] inclusive`);
+    }
+
+    if (column < 0 || column >= NUM_COLUMNS) {
+      throw new Error(`${ERR_TAG} Parameter column is '${column}', when it must be within a range of [0~7] inclusive`);
+    }
+
+    let resString = NUMBER_TO_COLUMN_LOOKUP.get(column) as string;
+    resString += (row + 1).toString();
+
+    return new Coordinate(resString, row, column);    
   }
 
   colour(): SquareColour {

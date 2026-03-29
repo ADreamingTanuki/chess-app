@@ -15,6 +15,8 @@ export default function Gameplay(): ReactNode {
 
   const [isInPlay, setIsInPlay] = useState(false);
   const [teamToPlay, setTeamToPlay] = useState<Team>('white');
+  const [selectedTile, setSelectedTile] = useState<Coordinate | undefined>();
+  const [displayedMoves, setDisplayMoves] = useState<Coordinate[] | undefined>();
   const [gameState, setGameState] = useState<ChessJSGameState>([]);
 
   function onStartGame() {
@@ -24,11 +26,13 @@ export default function Gameplay(): ReactNode {
     setGameState(ChessGame.game.board());
   }
 
-  // todo: highlight move tiles on click
-  // todo: can move pieces and progress game turns
   async function onClickTile(pos: Coordinate) {
+    console.log(`clicked on: ${pos.string}`);
     ChessGame.getMovesAt(pos)
-      .then(res => console.log(res));
+      .then(res => {
+        setSelectedTile(pos);
+        setDisplayMoves(res);
+      });
   }
   
   return (    
@@ -36,9 +40,15 @@ export default function Gameplay(): ReactNode {
       className="container"
     >      
       <Flex direciton="column">
+        {/* 
+        Need to re-check how pieces and tiles are being made... something is wrong 
+        with mapping between pieces and tiles, causing the selection system to fail            
+        */}
         <Board 
           gamestate={gameState} 
           tileClickCallback={onClickTile}
+          selectedTile={selectedTile}
+          displayedMoves={displayedMoves}
         />
         <Flex direciton="column">
           <TurnIndicator
