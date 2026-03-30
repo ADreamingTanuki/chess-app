@@ -40,7 +40,7 @@ export default class RenderGrid {
 
     for (let row = NUM_ROWS -1; row >= 0; row--) {
       for (let col = 0; col < NUM_COLUMNS; col++) {
-        const i = (row * NUM_COLUMNS) + row;
+        const i = (row * NUM_COLUMNS) + col;
 
         // check selcted tile
         const isSelected =

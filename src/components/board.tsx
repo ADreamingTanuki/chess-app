@@ -28,7 +28,8 @@ export interface BoardProps {
   gamestate: ChessJSGameState
   selectedTile: Coordinate | undefined,
   displayedMoves: Coordinate[] | undefined,
-  tileClickCallback: TileClickCallback
+  tileClickCallback: TileClickCallback,
+  pieceClickCallback: TileClickCallback
 }
 
 export default function Board(props: BoardProps): JSX.Element {
@@ -44,7 +45,7 @@ export default function Board(props: BoardProps): JSX.Element {
       <div id="pieces-container">{
         RenderPieces
           .fromChessJS(props.gamestate)
-          .toArray(cellSize, props.tileClickCallback)
+          .toArray(cellSize, props.pieceClickCallback)
       }
       </div>
       <div style={boardStyle(boardSize, cellSize)}>{

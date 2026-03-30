@@ -42,8 +42,6 @@ const STYLE_SHELL_WHITE: CSSProperties = {
   border: border(COLOUR.BLACK_2)
 }
 function styleOfOuter(coordinate: Coordinate, drawSize: number) {
-  console.log(`style row: ${coordinate.row}`)
-  console.log(`style column: ${coordinate.column}`)
   return {
     ...STYLE_OUTER,
     left: drawSize * coordinate.column,
